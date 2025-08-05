@@ -1,66 +1,60 @@
-import React, { useEffect, useRef } from 'react';
+// components/FloatingCards.jsx
+import React from "react";
+import { motion } from "framer-motion";
 
 const FloatingCards = () => {
-  const cardsRef = useRef([]);
-
-  const cards = [
-    { id: 1, name: 'card1.png', delay: 0 },
-    { id: 2, name: 'card2.png', delay: 0.2 },
-    { id: 3, name: 'card3.png', delay: 0.4 },
-    { id: 4, name: 'card4.png', delay: 0.6 },
-    { id: 5, name: 'card5.png', delay: 0.8 },
-    { id: 6, name: 'card6.png', delay: 1.0 },
+  const floatingElements = [
+    { id: 1, size: "w-20 h-20", top: "10%", left: "15%", delay: 0, color: "bg-blue-400/20" },
+    { id: 2, size: "w-16 h-16", top: "20%", left: "80%", delay: 0.5, color: "bg-purple-400/20" },
+    { id: 3, size: "w-12 h-12", top: "60%", left: "10%", delay: 1, color: "bg-pink-400/20" },
+    { id: 4, size: "w-24 h-24", top: "70%", left: "85%", delay: 1.5, color: "bg-indigo-400/20" },
+    { id: 5, size: "w-14 h-14", top: "40%", left: "50%", delay: 2, color: "bg-cyan-400/20" },
+    { id: 6, size: "w-18 h-18", top: "85%", left: "30%", delay: 2.5, color: "bg-emerald-400/20" },
   ];
 
-  useEffect(() => {
-    const cards = cardsRef.current;
-    
-    // Enhanced floating animation with better positioning
-    cards.forEach((card, index) => {
-      if (card) {
-        // More sophisticated positioning
-        const baseX = 15 + (index % 3) * 25;
-        const baseY = 20 + Math.floor(index / 3) * 30;
-        
-        card.style.left = `${baseX}%`;
-        card.style.top = `${baseY}%`;
-        card.style.width = '220px';
-        card.style.height = '300px';
-        
-        // Enhanced animation with staggered timing
-        const duration = 4 + Math.random() * 2;
-        const delay = index * 0.3;
-        
-        card.style.animation = `
-          float 6s ease-in-out ${delay}s infinite alternate
-        `;
-      }
-    });
-  }, []);
-
   return (
-    <div className="relative w-full h-screen overflow-hidden z-20">
-      {cards.map((card, index) => (
-        <div
-          key={card.id}
-          ref={el => cardsRef.current[index] = el}
-          className="absolute glass floating-card rounded-2xl shadow-elegant hover:shadow-2xl transition-all duration-300 cursor-pointer"
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {floatingElements.map((element) => (
+        <motion.div
+          key={element.id}
+          className={`absolute ${element.size} ${element.color} rounded-full backdrop-blur-sm`}
           style={{
-            left: `${15 + (index % 3) * 25}%`,
-            top: `${20 + Math.floor(index / 3) * 30}%`,
-            width: '220px',
-            height: '300px',
+            top: element.top,
+            left: element.left,
           }}
-        >
-          <div className="relative w-full h-full rounded-2xl overflow-hidden">
-            <img
-              src={`/card${card.id}.png`}
-              alt={`Card ${card.id}`}
-              className="w-full h-full object-cover rounded-2xl transition-transform duration-300 hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
-          </div>
-        </div>
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 180, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 6 + element.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: element.delay,
+          }}
+        />
+      ))}
+      
+      {/* Subtle sparkle effects */}
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={`sparkle-${i}`}
+          className="absolute w-1 h-1 bg-white rounded-full"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            opacity: [0, 1, 0],
+            scale: [0, 1, 0],
+          }}
+          transition={{
+            duration: 2 + Math.random() * 2,
+            repeat: Infinity,
+            delay: Math.random() * 3,
+          }}
+        />
       ))}
     </div>
   );

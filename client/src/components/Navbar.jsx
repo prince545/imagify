@@ -1,12 +1,20 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const navItems = [
-    { name: "Home", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Gallery", href: "#" },
+    { name: "Home", href: "#home", action: () => scrollToSection('home') },
+    { name: "Pricing", href: "#pricing", action: () => scrollToSection('pricing-section') },
+    { name: "Gallery", href: "#gallery", action: () => scrollToSection('magical-cards') },
     { name: "Studio", href: "#" },
   ];
 
@@ -34,7 +42,11 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
-              className="relative text-gray-700 font-medium hover:text-blue-600 transition-all duration-300 group"
+              onClick={(e) => {
+                e.preventDefault();
+                item.action();
+              }}
+              className="relative text-gray-700 font-medium hover:text-blue-600 transition-all duration-300 group cursor-pointer"
             >
               <span className="relative z-10">{item.name}</span>
               <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 group-hover:w-full transition-all duration-300"></div>
