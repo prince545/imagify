@@ -45,9 +45,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section className="w-full">
-          <HowItWorks />
-        </section>
+        
 
         {/* Freepik AI Suite Features Section */}
         <section className="w-full mt-16">
@@ -115,7 +113,9 @@ export default function Home() {
             <section id="pricing-section" className="w-full mt-16">
   <PricingSection />
 </section>
-
+<section className="w-full">
+          <HowItWorks />
+        </section>
           </div>
         </section>
       </div>
