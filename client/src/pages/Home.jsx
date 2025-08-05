@@ -1,15 +1,23 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import FloatingCards from "../components/FloatingCards";
+import MagicalCards from "../components/MagicalCards";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-outerBlue p-6">
-      <div className="bg-diag-white-inner w-full h-screen max-w-6xl mx-auto rounded-3xl shadow-xl p-10 flex flex-col">
+    <div className="min-h-screen bg-outerBlue p-6 relative">
+      {/* Magical floating cards background */}
+      <div className="absolute inset-0 z-0">
+        <FloatingCards />
+      </div>
+      
+      {/* Main content overlay */}
+      <div className="relative z-10 bg-diag-white-inner w-full min-h-screen max-w-6xl mx-auto rounded-3xl shadow-xl p-10 flex flex-col backdrop-blur-sm bg-opacity-95">
         {/* Navbar inside white gradient box */}
         <Navbar />
 
         {/* Main Section Centered */}
-        <section className="flex flex-col flex-grow items-center justify-center text-center w-full">
+        <section className="flex flex-col flex-grow items-center justify-center text-center w-full py-12">
           <h2 className="text-6xl font-bold text-gray-900 mb-4">
             Generate images <br /> from text
           </h2>
@@ -27,6 +35,11 @@ export default function Home() {
               Generate
             </button>
           </div>
+        </section>
+
+        {/* Magical Cards Section */}
+        <section className="w-full">
+          <MagicalCards />
         </section>
       </div>
     </div>
