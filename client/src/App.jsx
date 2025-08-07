@@ -1,37 +1,23 @@
 import React from "react";
-import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import PricingSection from "./pages/PricingSection";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import BuyCredit from "./pages/BuyCredit";
 import Result from "./pages/Result";
 
 export default function App() {
-  const location = useLocation();
-
-  // Check if current route is home page
-  const isFullPage = location.pathname === "/";
-
   return (
-    <div className="min-h-screen bg-outerBlue p-6">
-      {isFullPage ? (
-        // Full width layout for home page
+    <div className="min-h-screen bg-gray-50">
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/buy" element={<BuyCredit />} />
+          <Route path="/pricing" element={<PricingSection />} />
+          <Route path="/result" element={<Result />} />
         </Routes>
-      ) : (
-        // Contained layout for all other pages
-        <div className="max-w-5xl mx-auto bg-diag-white-inner backdrop-blur-md rounded-3xl shadow-xl p-10">
-          <Routes>
-            <Route path="/buy" element={<BuyCredit />} />
-            
-            
-            <Route path="/studio" element={<div>Studio Page</div>} />
-            <Route path="/navbar" element={<Navbar />} />
-            <Route path="/result" element={<Result />} />
-          </Routes>
-        </div>
-      )}
+      </main>
+      <Footer />
     </div>
   );
 }
